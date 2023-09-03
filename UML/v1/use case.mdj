@@ -336,7 +336,7 @@
 											"top": 523.5,
 											"width": 163,
 											"height": 13,
-											"text": "ajouter de nouveaux livres"
+											"text": "ajouter livres"
 										},
 										{
 											"_type": "LabelView",
@@ -369,7 +369,7 @@
 									"font": "Arial;13;0",
 									"left": 404.5,
 									"top": 516.5,
-									"width": 174.00439453125,
+									"width": 173,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGKUFNPwNyDmS0="
@@ -933,7 +933,7 @@
 											"top": 571.5,
 											"width": 125,
 											"height": 13,
-											"text": "recherche des livres"
+											"text": "recherche de livre"
 										},
 										{
 											"_type": "LabelView",
@@ -966,7 +966,7 @@
 									"font": "Arial;13;0",
 									"left": 420,
 									"top": 564.5,
-									"width": 135.7470703125,
+									"width": 135,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGKUFikWt0XDag="
@@ -4791,7 +4791,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGKUFKJTNvd0lQ="
 					},
-					"name": "ajouter de nouveaux livres"
+					"name": "ajouter livres"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -4815,7 +4815,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGKUFKJTNvd0lQ="
 					},
-					"name": "recherche des livres"
+					"name": "recherche de livre"
 				},
 				{
 					"_type": "UMLUseCase",
