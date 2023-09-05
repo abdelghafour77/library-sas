@@ -9,10 +9,12 @@ public class Admin extends User{
     }
 
     public void setAdmin_number(int admin_number) {
+
         this.admin_number = admin_number;
     }
 
     public int getAdmin_number() {
+
         return admin_number;
     }
 }

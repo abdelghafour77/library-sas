@@ -1,3 +1,8 @@
+import database.Dbconnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Author {
@@ -35,6 +40,20 @@ public class Author {
     }
     public void setBiography(String biography){
         this.biography=biography;
+    }
+
+    public void insertIntoDatabase() {
+        String insertSql = "INSERT INTO authors (name, biography, created_at, updated_at) VALUES (?, ?, ?, ?)";
+        try (Connection conn = Dbconnection.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(insertSql)) {
+            preparedStatement.setString(1, this.name);
+            preparedStatement.setString(2, this.biography);
+            preparedStatement.setDate(3, new java.sql.Date(this.created_at.getTime()));
+            preparedStatement.setDate(4, new java.sql.Date(this.updated_at.getTime()));
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
    
 

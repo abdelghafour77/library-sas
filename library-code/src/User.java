@@ -1,3 +1,8 @@
+import database.Dbconnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class User {
@@ -49,6 +54,30 @@ public class User {
     }
     public void setPhone(String phone){
         this.phone=phone;
+    }
+    public void insertIntoDatabase() {
+        String insertSql = "INSERT INTO users (name, email, password, phone, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = Dbconnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSql)) {
+
+            preparedStatement.setString(1, this.name);
+            preparedStatement.setString(2, this.email);
+            preparedStatement.setString(3, this.password);
+            preparedStatement.setString(4, this.phone);
+            preparedStatement.setTimestamp(5, new java.sql.Timestamp(this.created_at.getTime()));
+            preparedStatement.setTimestamp(6, new java.sql.Timestamp(this.updated_at.getTime()));
+
+
+            int rowsInserted = preparedStatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("User inserted into the database.");
+            } else {
+                System.out.println("User insertion failed.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
