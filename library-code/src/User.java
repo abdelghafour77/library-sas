@@ -23,6 +23,15 @@ public class User {
         this.created_at=created_at;
         this.updated_at=updated_at;
     }
+    public User( String name, String email, String password, String phone, Date created_at){
+        this.id= 0;
+        this.name=name;
+        this.email=email;
+        this.password=password;
+        this.phone=phone;
+        this.created_at=created_at;
+        this.updated_at=null;
+    }
 
     public int getId() {
         return id;
@@ -54,6 +63,9 @@ public class User {
     }
     public void setPhone(String phone){
         this.phone=phone;
+    }
+    public String toString(){
+        return "ID: "+this.id+"\n\t User: "+this.name+"\n\t Email: "+this.email+"\n\t Password: "+this.password+"\n\t Phone: "+this.phone+"\n\t Created at: "+this.created_at+"\n\t Updated at: "+this.updated_at;
     }
     public void insertIntoDatabase() {
         String insertSql = "INSERT INTO users (name, email, password, phone, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";

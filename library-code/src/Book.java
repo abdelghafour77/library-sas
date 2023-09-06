@@ -11,9 +11,11 @@ public class Book {
     private String isbn;
     private int quantity;
     private int quantity_intial;
-
     private Date created_at;
     private Date updated_at;
+
+    public Book() {
+    }
 
     public Book(int id, String title, String isbn, int quantity, int quantity_intial, Date created_at, Date updated_at){
         this.id=id;

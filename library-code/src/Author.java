@@ -9,7 +9,6 @@ public class Author {
     private int id;
     private String name;
     private String biography;
-
     private Date created_at;
     private Date updated_at;
 
