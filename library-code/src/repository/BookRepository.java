@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public class BookRepository {
-    private Connection connection;
+    private static Connection connection;
     private List<Book> books = new ArrayList<>();
     private int nextId = 1;
     private Date created_at = new Date();
@@ -27,10 +27,10 @@ public class BookRepository {
         books.add(new Book(nextId++,author_id, title,  isbn, quantity, quantity, created_at));
     }
 
-    public List<Book> getAllBooks() {
+    public static List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
-        books.add(new Book(1,1, "title",  "isbn", 1, 1, created_at));
-        /*try {
+
+        try {
             String query = "SELECT * FROM books";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -43,8 +43,7 @@ public class BookRepository {
                 int quantity = resultSet.getInt("quantity");
                 int available_quantity = resultSet.getInt("available_quantity");
 
-                *//*Date created_at = resultSet.getDate("created_at");
-                Date updated_at = resultSet.getDate("updated_at");*//*
+
 
                 books.add(new Book(id, author_id, title, isbn, quantity, available_quantity,null,null));
             }
@@ -54,7 +53,7 @@ public class BookRepository {
         } catch (SQLException e) {
             e.printStackTrace();
 
-        }*/
+        }
 
         return books;
     }

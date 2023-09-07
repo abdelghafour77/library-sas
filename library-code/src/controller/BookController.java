@@ -16,15 +16,13 @@ public class BookController {
 
     public void listAllBooks() {
         System.out.println("\nList All Books :");
-        BookService.getAllBooks();
-        // CREATE FOR LOOP TO PRINT ALL BOOKS
-       // bookService.getAllBooks();
-       /* System.out.println(books.size());
+
+        List<Book> books = new ArrayList<>();
+        books = BookRepository.getAllBooks();
+
         for (Book book : books) {
             System.out.println("\n\tId: "+book.getId()+" ISBN: "+book.getIsbn()+" Title: "+book.getTitle()+" Author: "+book.getAuthor_id()+" Quantity: "+book.getQuantity());
-        }*/
-
-
+        }
 
     }
     private void addBook() {

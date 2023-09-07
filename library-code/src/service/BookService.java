@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookService {
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -20,16 +20,8 @@ public class BookService {
         bookRepository.createBook( title,  author_id,  isbn,  quantity);
     }
 
-    public static void getAllBooks() {
-
-        System.out.println("here");
-        ArrayList<Book> books = new ArrayList<Book>();
-       if( books.add(new Book(1,1, "title",  "isbn", 1, 1, null))){
-           System.out.println("added");
-       }
-        //System.out.println(books.size());
-       // return bookRepository.getAllBooks();
-        //return books;
+    public static List<Book> getAllBooks() {
+        return BookRepository.getAllBooks();
     }
 
     public Book getBookById(int id) {
