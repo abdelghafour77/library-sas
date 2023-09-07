@@ -1,10 +1,4 @@
 package model;
-
-import database.Dbconnection;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Date;
 
 public class Book {
@@ -39,6 +33,15 @@ public class Book {
         this.available_quantity = available_quantity;
         this.author_id = author_id;
         this.created_at = created_at;
+    }
+
+    public Book(int id, String title, String isbn, int quantity, int available_quantity, int author_id) {
+        this.id = id;
+        this.title = title;
+        this.isbn = isbn;
+        this.quantity = quantity;
+        this.available_quantity = available_quantity;
+        this.author_id = author_id;
     }
 
     public int getId() {

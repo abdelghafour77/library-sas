@@ -1,17 +1,12 @@
 import controller.BookController;
-import controller.UserController;
 
-import repository.BookRepository;
-import service.BookService;
+
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        BookRepository bookRepository = new BookRepository();
-        BookService bookService = new BookService(bookRepository);
-        UserController userController = new UserController();
 
 
         while (true) {
@@ -26,10 +21,10 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    bookMenu( scanner);
+                    bookMenu(scanner);
                     break;
                 case 2:
-                    userMenu(userController, scanner);
+                    userMenu(scanner);
                     break;
                 case 3:
                     System.out.println("Goodbye!");
@@ -46,14 +41,15 @@ public class Main {
             System.out.println("\nBooks Menu");
             System.out.println("1. List All Books");
             System.out.println("2. Add a Book");
-            System.out.println("3. View Book Details");
+            System.out.println("3. Search for Book");
             System.out.println("4. Update Book Details");
             System.out.println("5. Delete a Book");
-            System.out.println("6. Back to Main Menu");
+            System.out.println("6. Statistics");
+            System.out.println("7. Back to Main Menu");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -63,22 +59,25 @@ public class Main {
                     BookController.addBook();
                     break;
                 case 3:
-
+                    BookController.searchBook();
                     break;
                 case 4:
-
+                    BookController.updateBookDetails();
                     break;
                 case 5:
-
+                    BookController.deleteBook();
                     break;
                 case 6:
-
+                    BookController.statistics();
+                    break;
+                case 7:
+                    return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
     }
-    private static void userMenu(UserController userController, Scanner scanner) {
+    private static void userMenu(Scanner scanner) {
         while (true) {
             System.out.println("\nUsers Menu");
             System.out.println("1. List All Users");

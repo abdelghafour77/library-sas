@@ -8,14 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class BookRepository {
     private static Connection connection;
     private final List<Book> books = new ArrayList<>();
-    private final int nextId = 1;
-    private final Date created_at = new Date();
+
 
     public BookRepository() {
         connection = Dbconnection.getConnection();
@@ -55,8 +53,6 @@ public class BookRepository {
                 int quantity = resultSet.getInt("quantity");
                 int available_quantity = resultSet.getInt("available_quantity");
 
-
-
                 books.add(new Book(id, author_id, title, isbn, quantity, available_quantity,null,null));
             }
 
@@ -77,6 +73,35 @@ public class BookRepository {
             }
         }
         return null;
+    }
+
+    public List<Book> searchBook(String title) {
+        List<Book> books = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM books WHERE title LIKE ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, "%" + title + "%");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int author_id = resultSet.getInt("author_id");
+                String title1 = resultSet.getString("title");
+                String isbn = resultSet.getString("isbn");
+                int quantity = resultSet.getInt("quantity");
+                int available_quantity = resultSet.getInt("available_quantity");
+
+                books.add(new Book(id, author_id, title1, isbn, quantity, available_quantity,null,null));
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return books;
     }
 
     public void updateBook(int id, String title, String author) {

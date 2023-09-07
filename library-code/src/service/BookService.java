@@ -24,15 +24,19 @@ public class BookService {
         return BookRepository.getAllBooks();
     }
 
-    public Book getBookById(int id) {
+    public static Book getBookById(int id) {
         return bookRepository.getBookById(id);
     }
 
-    public void updateBook(int id, String title, String author) {
+    public static List<Book> searchBook(String title) {
+        return bookRepository.searchBook(title);
+    }
+
+    public static void updateBook(int id, String title, String author) {
         bookRepository.updateBook(id, title, author);
     }
 
-    public void deleteBook(int id) {
+    public static void deleteBook(int id) {
         // Check if the book exists
         Book existingBook = bookRepository.getBookById(id);
         if (existingBook != null) {

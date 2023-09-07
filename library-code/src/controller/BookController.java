@@ -4,21 +4,18 @@ import model.Book;
 import repository.BookRepository;
 import service.BookService;
 
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class BookController {
-    private static BookService bookService;
-    private Connection connection;
+
     private static final Scanner scanner = new Scanner(System.in);
 
 
     public static void listAllBooks() {
         System.out.println("\nList All Books :");
 
-        List<Book> books = new ArrayList<>();
+        List<Book> books;
         books = BookRepository.getAllBooks();
 
         for (Book book : books) {
@@ -39,12 +36,13 @@ public class BookController {
         BookService.createBook(new Book(1,author_id, title, isbn, quantity,quantity, null));
         System.out.println("Book added successfully.");
     }
+
     private void viewBookDetails() {
         System.out.print("Enter the ID of the book: ");
         int id = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine();
 
-        Book book = bookService.getBookById(id);
+        Book book = BookService.getBookById(id);
         if (book != null) {
             System.out.println("\nBook Details:");
             System.out.println(book);
@@ -52,41 +50,54 @@ public class BookController {
             System.out.println("Book not found.");
         }
     }
-    private void updateBookDetails() {
+    public static void searchBook() {
+        System.out.print("Enter the title of the book: ");
+        String title = scanner.nextLine();
+
+        List<Book> books = BookService.searchBook(title);
+        if (books.size() > 0) {
+            System.out.println("\nSearch Results:");
+            for (Book book : books) {
+                System.out.println(book);
+            }
+        } else {
+            System.out.println("No books found.");
+        }
+    }
+    public static void updateBookDetails() {
         System.out.print("Enter the ID of the book to update: ");
         int id = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine();
 
-        Book existingBook = bookService.getBookById(id);
+        Book existingBook = BookService.getBookById(id);
         if (existingBook != null) {
             System.out.print("Enter the new title of the book: ");
             String newTitle = scanner.nextLine();
             System.out.print("Enter the new author of the book: ");
             String newAuthor = scanner.nextLine();
 
-            bookService.updateBook(id, newTitle, newAuthor);
+            BookService.updateBook(id, newTitle, newAuthor);
             System.out.println("Book details updated successfully.");
         } else {
             System.out.println("Book not found.");
         }
     }
-    private void deleteBook() {
+    public static void deleteBook() {
         System.out.print("Enter the ID of the book to delete: ");
         int id = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine();
 
-        Book existingBook = bookService.getBookById(id);
+        Book existingBook = BookService.getBookById(id);
         if (existingBook != null) {
-            bookService.deleteBook(id);
+            BookService.deleteBook(id);
             System.out.println("Book deleted successfully.");
         } else {
             System.out.println("Book not found.");
         }
     }
-    public static void main(String[] args) {
-        BookRepository bookRepository = new BookRepository();
-        BookService bookService = new BookService(bookRepository);
-        //BookController bookController = new BookController(bookService);
-    //    bookController.start();
+
+    public static void statistics() {
     }
+
+
 }
