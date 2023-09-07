@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookService {
-    private final BookRepository bookRepository;
+    private static BookRepository bookRepository;
 
     public BookService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+        BookService.bookRepository = bookRepository;
     }
 
-    public void createBook(String title, int author_id, String isbn, int quantity) {
-        bookRepository.createBook( title,  author_id,  isbn,  quantity);
+    public static void createBook(Book book) {
+        bookRepository.createBook(book);
     }
 
     public static List<Book> getAllBooks() {

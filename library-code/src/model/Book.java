@@ -84,5 +84,19 @@ public class Book {
         this.author_id=author_id;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", author_id=" + author_id +
+                ", title='" + title + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", quantity=" + quantity +
+                ", available_quantity=" + available_quantity +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
+                '}';
+    }
+
 
 }

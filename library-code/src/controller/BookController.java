@@ -10,32 +10,33 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BookController {
-    private BookService bookService;
+    private static BookService bookService;
     private Connection connection;
-    private Scanner scanner;
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public void listAllBooks() {
+
+    public static void listAllBooks() {
         System.out.println("\nList All Books :");
 
         List<Book> books = new ArrayList<>();
         books = BookRepository.getAllBooks();
 
         for (Book book : books) {
-            System.out.println("\n\tId: "+book.getId()+" ISBN: "+book.getIsbn()+" Title: "+book.getTitle()+" Author: "+book.getAuthor_id()+" Quantity: "+book.getQuantity());
+            System.out.println(book.toString()+"\n");
         }
 
     }
-    private void addBook() {
+    public static void addBook() {
         System.out.print("Enter the title of the book: ");
         String title = scanner.nextLine();
         System.out.print("Enter the id_author of the book: ");
-        int author_id = scanner.nextInt();
+        int author_id =Integer.parseInt(scanner.nextLine());
         System.out.print("Enter the isbn of the book: ");
         String isbn = scanner.nextLine();
         System.out.print("Enter the quantity of the book: ");
-        int quantity = scanner.nextInt();
+        int quantity = Integer.parseInt(scanner.nextLine());
 
-        bookService.createBook(title, author_id, isbn, quantity);
+        BookService.createBook(new Book(1,author_id, title, isbn, quantity,quantity, null));
         System.out.println("Book added successfully.");
     }
     private void viewBookDetails() {

@@ -22,14 +22,14 @@ public class Main {
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
                     bookMenu( scanner);
                     break;
                 case 2:
-                    userMenu(userController, scanner); // You should create a userMenu method similarly
+                    userMenu(userController, scanner);
                     break;
                 case 3:
                     System.out.println("Goodbye!");
@@ -57,11 +57,10 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    BookController bookController = new BookController();
-                    bookController.listAllBooks();
+                    BookController.listAllBooks();
                     break;
                 case 2:
-
+                    BookController.addBook();
                     break;
                 case 3:
 

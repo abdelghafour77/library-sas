@@ -13,18 +13,30 @@ import java.util.List;
 
 public class BookRepository {
     private static Connection connection;
-    private List<Book> books = new ArrayList<>();
-    private int nextId = 1;
-    private Date created_at = new Date();
+    private final List<Book> books = new ArrayList<>();
+    private final int nextId = 1;
+    private final Date created_at = new Date();
 
     public BookRepository() {
-        this.connection = Dbconnection.getConnection();
+        connection = Dbconnection.getConnection();
     }
 
-    public void createBook(String title, int author_id, String isbn, int quantity) {
+    public static void createBook(Book book) {
+        try {
+            String query = "INSERT INTO books (title, author_id, isbn, quantity, available_quantity) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
 
+            statement.setString(1, book.getTitle());
+            statement.setInt(2, book.getAuthor_id());
+            statement.setString(3, book.getIsbn());
+            statement.setInt(4, book.getQuantity());
+            statement.setInt(5, book.getQuantity());
 
-        books.add(new Book(nextId++,author_id, title,  isbn, quantity, quantity, created_at));
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static List<Book> getAllBooks() {
