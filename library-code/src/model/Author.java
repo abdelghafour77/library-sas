@@ -1,3 +1,5 @@
+package model;
+
 import database.Dbconnection;
 
 import java.sql.Connection;

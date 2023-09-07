@@ -1,3 +1,5 @@
+package model;
+
 public class Borrow {
     int id;
     int user_id;
