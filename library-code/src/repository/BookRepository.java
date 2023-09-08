@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookRepository {
-    private static Connection connection;
+    private static Connection connection=Dbconnection.getConnection();;
     private final List<Book> books = new ArrayList<>();
 
 
@@ -66,16 +66,63 @@ public class BookRepository {
         return books;
     }
 
-    public Book getBookById(int id) {
-        for (Book book : books) {
-            if (book.getId() == id) {
-                return book;
+    public static Book getBookById(int id) {
+        Book book = null;
+
+        try {
+            String query = "SELECT * FROM books WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int author_id = resultSet.getInt("author_id");
+                String title = resultSet.getString("title");
+                String isbn = resultSet.getString("isbn");
+                int quantity = resultSet.getInt("quantity");
+                int available_quantity = resultSet.getInt("available_quantity");
+
+                book = new Book(id, author_id, title, isbn, quantity, available_quantity,null,null);
             }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+
+        return book;
     }
 
-    public List<Book> searchBook(String title) {
+    public static Book getBookByIsbn(String isbn) {
+        Book book = null;
+
+        try {
+            String query = "SELECT * FROM books WHERE isbn = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, isbn);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int author_id = resultSet.getInt("author_id");
+                String title = resultSet.getString("title");
+                int quantity = resultSet.getInt("quantity");
+                int available_quantity = resultSet.getInt("available_quantity");
+
+                book = new Book(id, author_id, title, isbn, quantity, available_quantity,null,null);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return book;
+    }
+
+    public static List<Book> searchBook(String title) {
         List<Book> books = new ArrayList<>();
 
         try {
@@ -104,16 +151,28 @@ public class BookRepository {
         return books;
     }
 
-    public void updateBook(int id, String title, String author) {
-        for (Book book : books) {
-            if (book.getId() == id) {
-                book.setTitle(title);
-               // book.setAuthor(author);
-            }
+    public static Book updateBook(Book book) {
+        try {
+            String query = "UPDATE books SET title = ?, author_id = ?, isbn = ?, quantity = ?, available_quantity = ? WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, book.getTitle());
+            statement.setInt(2, book.getAuthor_id());
+            statement.setString(3, book.getIsbn());
+            statement.setInt(4, book.getQuantity());
+            statement.setInt(5, book.getAvailable_quantity());
+            statement.setInt(6, book.getId());
+
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+        return book;
     }
 
-    public void deleteBook(int id) {
-        books.removeIf(book -> book.getId() == id);
+    public static void deleteBook(int id) {
+        //books.removeIf(book -> book.getId() == id);
     }
 }

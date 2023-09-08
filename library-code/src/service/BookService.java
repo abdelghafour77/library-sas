@@ -5,8 +5,6 @@ package service;
 import model.Book;
 import repository.BookRepository;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookService {
@@ -25,22 +23,26 @@ public class BookService {
     }
 
     public static Book getBookById(int id) {
-        return bookRepository.getBookById(id);
+        return BookRepository.getBookById(id);
+    }
+
+    public static Book getBookByIsbn(String isbn) {
+        return BookRepository.getBookByIsbn(isbn);
     }
 
     public static List<Book> searchBook(String title) {
-        return bookRepository.searchBook(title);
+        return BookRepository.searchBook(title);
     }
 
-    public static void updateBook(int id, String title, String author) {
-        bookRepository.updateBook(id, title, author);
+    public static Book updateBook(Book book) {
+        return BookRepository.updateBook(book);
     }
 
     public static void deleteBook(int id) {
         // Check if the book exists
-        Book existingBook = bookRepository.getBookById(id);
+        Book existingBook = BookRepository.getBookById(id);
         if (existingBook != null) {
-            bookRepository.deleteBook(id);
+            BookRepository.deleteBook(id);
         } else {
             throw new IllegalArgumentException("Book with ID " + id + " not found.");
         }

@@ -23,6 +23,16 @@ public class Borrow {
         this.updated_at=updated_at;
     }
 
+    public Borrow(int id, int user_id, int book_id, String borrow_date, String return_date, String status, String description) {
+        this.id = id;
+        this.user_id = user_id;
+        this.book_id = book_id;
+        this.borrow_date = borrow_date;
+        this.return_date = return_date;
+        this.status = status;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }
@@ -77,6 +87,21 @@ public class Borrow {
     }
     public void setUpdated_at(String updated_at){
         this.updated_at=updated_at;
+    }
+
+    @Override
+    public String toString() {
+        return "Borrow{" +
+                "id=" + id +
+                ", user_id='" + user_id + '\'' +
+                ", book_id='" + book_id + '\'' +
+                ", borrow_date='" + borrow_date + '\'' +
+                ", return_date='" + return_date + '\'' +
+                ", status='" + status + '\'' +
+                ", description='" + description + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", updated_at='" + updated_at + '\'' +
+                '}';
     }
 
 

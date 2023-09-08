@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 06, 2023 at 09:16 AM
+-- Generation Time: Sep 08, 2023 at 03:50 PM
 -- Server version: 8.0.27
 -- PHP Version: 8.0.13
 
@@ -34,10 +34,10 @@ CREATE TABLE IF NOT EXISTS `authors` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `biography` text COLLATE utf8mb4_general_ci NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `authors`
@@ -59,22 +59,26 @@ CREATE TABLE IF NOT EXISTS `books` (
   `isbn` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `quantity` int NOT NULL,
   `author_id` int NOT NULL,
-  `quantity_in` int NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `updated_by` int NOT NULL,
+  `available_quantity` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `isbn` (`isbn`),
   KEY `updated_by` (`updated_by`),
   KEY `author_id` (`author_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `books`
 --
 
-INSERT INTO `books` (`id`, `title`, `isbn`, `quantity`, `author_id`, `quantity_in`, `created_at`, `updated_at`, `updated_by`) VALUES
-(1, 'The Secret\r\n', '123456789', 20, 1, 20, '2023-09-06 08:39:14', '0000-00-00 00:00:00', 1);
+INSERT INTO `books` (`id`, `title`, `isbn`, `quantity`, `author_id`, `available_quantity`, `created_at`, `updated_at`, `updated_by`) VALUES
+(1, 'ME', '123456789', 1, 1, 1, '2023-09-06 08:39:14', '0000-00-00 00:00:00', 1),
+(2, 'ME', '12221', 2, 1, 2, '2023-09-07 15:02:58', NULL, NULL),
+(3, 'HHHH', '43432', 2, 1, 2, '2023-09-07 15:10:41', NULL, NULL),
+(4, 'SOUFIANE', '21892198', 3, 1, 3, '2023-09-07 15:45:28', NULL, NULL),
+(5, 'TEST', 'ISBN_TEST', 10, 1, 10, '2023-09-08 08:36:16', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -87,12 +91,12 @@ CREATE TABLE IF NOT EXISTS `borrowers` (
   `id` int NOT NULL AUTO_INCREMENT,
   `book_id` int NOT NULL,
   `user_id` int NOT NULL,
-  `borrowed_at` timestamp NOT NULL,
-  `returned_at` timestamp NOT NULL,
+  `borrow_date` date NOT NULL,
+  `return_date` date DEFAULT NULL,
   `status` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
   `description` text COLLATE utf8mb4_general_ci NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `book_id` (`book_id`),
   KEY `user_id` (`user_id`)
@@ -102,8 +106,8 @@ CREATE TABLE IF NOT EXISTS `borrowers` (
 -- Dumping data for table `borrowers`
 --
 
-INSERT INTO `borrowers` (`id`, `book_id`, `user_id`, `borrowed_at`, `returned_at`, `status`, `description`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2023-09-06 08:40:23', '2023-09-13 08:40:23', 'borrowed', 'aaaaaaaaaaaaaaa', '2023-09-06 08:40:23', '0000-00-00 00:00:00');
+INSERT INTO `borrowers` (`id`, `book_id`, `user_id`, `borrow_date`, `return_date`, `status`, `description`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2023-09-06', '2023-09-13', 'borrowed', 'aaaaaaaaaaaaaaa', '2023-09-06 08:40:23', '0000-00-00 00:00:00');
 
 --
 -- Triggers `borrowers`
@@ -140,18 +144,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `member_number` int DEFAULT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `admin_number` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `member_number`, `created_at`, `updated_at`, `admin_number`) VALUES
-(1, 'John', 'user@mail.com', '123456', '123456789', NULL, '2023-09-05 14:24:14', '2023-09-05 14:24:14', NULL);
+(1, 'John', 'user@mail.com', '123456', '123456789', NULL, '2023-09-05 14:24:14', '2023-09-05 14:24:14', NULL),
+(2, 'ilyass', 'ilyass@mail.com', '12345678', '123456789', NULL, '2023-09-06 10:01:37', '2023-09-06 10:01:37', NULL);
 
 --
 -- Constraints for dumped tables

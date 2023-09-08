@@ -43,6 +43,17 @@ public class Author {
         this.biography=biography;
     }
 
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", biography='" + biography + '\'' +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
+                '}';
+    }
+
     public void insertIntoDatabase() {
         String insertSql = "INSERT INTO authors (name, biography, created_at, updated_at) VALUES (?, ?, ?, ?)";
         try (Connection conn = Dbconnection.getConnection();
