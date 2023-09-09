@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookRepository {
-    private static Connection connection=Dbconnection.getConnection();;
-    private final List<Book> books = new ArrayList<>();
-
+    private static Connection connection = Dbconnection.getConnection();
 
     public BookRepository() {
         connection = Dbconnection.getConnection();
@@ -53,7 +51,7 @@ public class BookRepository {
                 int quantity = resultSet.getInt("quantity");
                 int available_quantity = resultSet.getInt("available_quantity");
 
-                books.add(new Book(id, author_id, title, isbn, quantity, available_quantity,null,null));
+                books.add(new Book(id, author_id, title, isbn, quantity, available_quantity, null, null));
             }
 
             resultSet.close();
@@ -82,7 +80,7 @@ public class BookRepository {
                 int quantity = resultSet.getInt("quantity");
                 int available_quantity = resultSet.getInt("available_quantity");
 
-                book = new Book(id, author_id, title, isbn, quantity, available_quantity,null,null);
+                book = new Book(id, author_id, title, isbn, quantity, available_quantity, null, null);
             }
 
             resultSet.close();
@@ -110,7 +108,7 @@ public class BookRepository {
                 int quantity = resultSet.getInt("quantity");
                 int available_quantity = resultSet.getInt("available_quantity");
 
-                book = new Book(id, author_id, title, isbn, quantity, available_quantity,null,null);
+                book = new Book(id, author_id, title, isbn, quantity, available_quantity, null, null);
             }
 
             resultSet.close();
@@ -139,7 +137,7 @@ public class BookRepository {
                 int quantity = resultSet.getInt("quantity");
                 int available_quantity = resultSet.getInt("available_quantity");
 
-                books.add(new Book(id, author_id, title1, isbn, quantity, available_quantity,null,null));
+                books.add(new Book(id, author_id, title1, isbn, quantity, available_quantity, null, null));
             }
 
             resultSet.close();

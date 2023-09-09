@@ -14,8 +14,6 @@ import java.util.List;
 public class AuthorRepository {
 
     private static Connection connection = Dbconnection.getConnection();
-    ;
-    private final List<Book> books = new ArrayList<>();
 
     public AuthorRepository() {
         connection = Dbconnection.getConnection();

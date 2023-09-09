@@ -1,6 +1,7 @@
 import controller.AuthorController;
 import controller.BookController;
 import controller.BorrowController;
+import controller.UserController;
 
 
 import java.util.Scanner;
@@ -105,19 +106,38 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    // Call a method to list all users from the UserController
+                    UserController.listAllUsers();
                     break;
                 case 2:
-                    // Call a method to add a user from the UserController
-                    break;
+                    while(true){
+                        System.out.println("\nAdd a User");
+                        System.out.println("1. Add an Admin");
+                        System.out.println("2. Add a Client");
+                        System.out.println("3. Back to Main Menu");
+                        System.out.print("Enter your choice: ");
+                        int choice1 = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
+                        switch (choice1){
+                            case 1:
+                                UserController.addAdmin();
+                                break;
+                            case 2:
+                                UserController.addClient();
+                                break;
+                            case 3:
+                                return;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                        }
+                    }
                 case 3:
-                    // Call a method to view user details from the UserController
+                    UserController.viewUserDetails();
                     break;
                 case 4:
-                    // Call a method to update user details from the UserController
+                    UserController.updateUserDetails();
                     break;
                 case 5:
-                    // Call a method to delete a user from the UserController
+                    UserController.deleteUser();
                     break;
                 case 6:
                     return; // Return to the main menu

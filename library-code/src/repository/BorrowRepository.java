@@ -14,13 +14,8 @@ public class BorrowRepository {
 
     private static Connection connection = Dbconnection.getConnection();
 
-    private final List<Borrow> borrows = new ArrayList<>();
-
-    public BorrowRepository() {
-        connection = Dbconnection.getConnection();
-    }
-
     public static List<Borrow> getAllBorrows() {
+
         List<Borrow> borrows = new ArrayList<>();
 
         try {
