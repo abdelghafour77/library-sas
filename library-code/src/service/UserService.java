@@ -18,8 +18,8 @@ public class UserService {
         return AdminRepository.getAllUsers();
     }
 
-    public static Admin getUserByEmail(String email) {
-        return AdminRepository.getUserByEmail(email);
+    public static Client getUserByEmail(String email) {
+        return ClientRepository.getUserByEmail(email);
     }
 
     public static void createClient(Client client) {

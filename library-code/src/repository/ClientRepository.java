@@ -32,6 +32,29 @@ public class ClientRepository {
             e.printStackTrace();
         }
     }
+    public static Client getUserByEmail(String email){
+        Client user=null;
+        try {
+            String query = "SELECT * FROM users WHERE email = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int is_admin = resultSet.getInt("is_admin");
+                String name = resultSet.getString("name");
+                String password = resultSet.getString("password");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+
+                user = new Client(id, is_admin, name, email,password, phone, address, null, null);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return user;
+    }
 
     public static void updateClient(Client client) {
         try {

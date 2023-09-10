@@ -1,34 +1,30 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Borrow {
     int id;
-    int user_id;
-    int book_id;
-    String borrow_date;
-    String return_date;
+    String email;
+    String ISBN;
     String status;
     String description;
     String created_at;
     String updated_at;
 
-    public Borrow(int id, int user_id, int book_id, String borrow_date, String return_date, String status, String description, String created_at, String updated_at){
+    public Borrow(int id, String email, String ISBN, String status, String description){
         this.id=id;
-        this.user_id=user_id;
-        this.book_id=book_id;
-        this.borrow_date=borrow_date;
-        this.return_date=return_date;
+        this.email=email;
+        this.ISBN=ISBN;
         this.status=status;
         this.description=description;
         this.created_at=created_at;
         this.updated_at=updated_at;
     }
 
-    public Borrow(int id, int user_id, int book_id, String borrow_date, String return_date, String status, String description) {
+    public Borrow(int id, String email, String ISBN, LocalDate borrow_date, LocalDate return_date, String status, String description) {
         this.id = id;
-        this.user_id = user_id;
-        this.book_id = book_id;
-        this.borrow_date = borrow_date;
-        this.return_date = return_date;
+        this.email = email;
+        this.ISBN = ISBN;
         this.status = status;
         this.description = description;
     }
@@ -36,17 +32,11 @@ public class Borrow {
     public int getId() {
         return id;
     }
-    public int getUser_id(){
-        return this.user_id;
+    public String getEmail(){
+        return this.email;
     }
-    public int getBook_id(){
-        return this.book_id;
-    }
-    public String getBorrow_date(){
-        return this.borrow_date;
-    }
-    public String getReturn_date(){
-        return this.return_date;
+    public String getISBN(){
+        return this.ISBN;
     }
     public String getStatus(){
         return this.status;
@@ -64,17 +54,11 @@ public class Borrow {
     public void setId(int id) {
         this.id = id;
     }
-    public void setUser_id(int user_id){
-        this.user_id=user_id;
+    public void setUser_id(String email){
+        this.email=email;
     }
-    public void setBook_id(int book_id){
-        this.book_id=book_id;
-    }
-    public void setBorrow_date(String borrow_date){
-        this.borrow_date=borrow_date;
-    }
-    public void setReturn_date(String return_date){
-        this.return_date=return_date;
+    public void setBook_id(String ISBN){
+        this.ISBN=ISBN;
     }
     public void setStatus(String status){
         this.status=status;
@@ -93,10 +77,8 @@ public class Borrow {
     public String toString() {
         return "Borrow{" +
                 "id=" + id +
-                ", user_id='" + user_id + '\'' +
-                ", book_id='" + book_id + '\'' +
-                ", borrow_date='" + borrow_date + '\'' +
-                ", return_date='" + return_date + '\'' +
+                ", email='" + email + '\'' +
+                ", ISBN='" + ISBN + '\'' +
                 ", status='" + status + '\'' +
                 ", description='" + description + '\'' +
                 ", created_at='" + created_at + '\'' +

@@ -97,7 +97,6 @@ public class Book {
                 ", quantity=" + quantity +
                 ", available_quantity=" + available_quantity +
                 ", created_at=" + created_at +
-                ", updated_at=" + updated_at +
                 '}';
     }
 

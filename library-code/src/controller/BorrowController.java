@@ -3,6 +3,7 @@ package controller;
 import model.Borrow;
 import repository.BorrowRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,20 +24,25 @@ public class BorrowController {
     }
 
     public static void addBorrow() {
-        System.out.print("Enter the user_id of the borrow: ");
-        int user_id = Integer.parseInt(scanner.nextLine());
-        System.out.print("Enter the book_id of the borrow: ");
-        int book_id = Integer.parseInt(scanner.nextLine());
-        System.out.print("Enter the borrow_date of the borrow: ");
-        String borrow_date = scanner.nextLine();
-        System.out.print("Enter the return_date of the borrow: ");
-        String return_date = scanner.nextLine();
-        System.out.print("Enter the status of the borrow: ");
-        String status = scanner.nextLine();
+        System.out.print("Enter the email of the user: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter the ISBN of the book: ");
+        String ISBN = scanner.nextLine();
         System.out.print("Enter the description of the borrow: ");
         String description = scanner.nextLine();
+        BorrowRepository.createBorrow(new Borrow(1, email, ISBN, "borrow", description));
+        System.out.println("Borrow added successfully.");
+    }
 
-        BorrowRepository.createBorrow(new Borrow(1, user_id, book_id, borrow_date, return_date, status, description));
+    public static void addReturn() {
+        System.out.print("Enter the email of the return: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter the ISBN of the borrow: ");
+        String ISBN = scanner.nextLine();
+
+        System.out.print("Enter the description of the return: ");
+        String description = scanner.nextLine();
+        BorrowRepository.createBorrow(new Borrow(1, email, ISBN, "return", description));
         System.out.println("Borrow added successfully.");
     }
 
@@ -67,8 +73,8 @@ public class BorrowController {
 
     }
 
-    public static void getBorrowByUserId(int user_id) {
-        List<Borrow> borrows = BorrowRepository.getBorrowByUserId(user_id);
+    public static void getBorrowByEmail(String email) {
+        List<Borrow> borrows = BorrowRepository.getBorrowByEmail(email);
         if (borrows.size() > 0) {
             System.out.println("\nBorrows found:");
             for (Borrow borrow : borrows) {
@@ -79,9 +85,9 @@ public class BorrowController {
         }
     }
 
-    public static void getBorrowByBookId(int book_id) {
+    public static void getBorrowByISBN(String ISBN) {
 
-        List<Borrow> borrows = BorrowRepository.getBorrowByBookId(book_id);
+        List<Borrow> borrows = BorrowRepository.getBorrowByISBN(ISBN);
         if (borrows.size() > 0) {
             System.out.println("\nBorrows found:");
             for (Borrow borrow : borrows) {

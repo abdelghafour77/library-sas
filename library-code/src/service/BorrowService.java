@@ -25,12 +25,12 @@ public class BorrowService {
         return BorrowRepository.getBorrowById(id);
     }
 
-    public static List<Borrow> getBorrowByUserId(int user_id) {
-        return BorrowRepository.getBorrowByUserId(user_id);
+    public static List<Borrow> getBorrowByEmail(String email) {
+        return BorrowRepository.getBorrowByEmail(email);
     }
 
-    public static List<Borrow> getBorrowByBookId(int book_id) {
-        return BorrowRepository.getBorrowByBookId(book_id);
+    public static List<Borrow> getBorrowByBookId(String ISBN) {
+        return BorrowRepository.getBorrowByISBN(ISBN);
     }
 
     public static List<Borrow> getBorrowByStatus(String status) {

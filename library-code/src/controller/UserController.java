@@ -16,32 +16,26 @@ public class UserController {
     private static final Scanner scanner = new Scanner(System.in);
     //create method to add user
 
-    public static int  login() {
+    public static Client login() {
         System.out.print("Enter your email: ");
         String email = scanner.nextLine();
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
 
-        Admin user = UserService.getUserByEmail(email);
+        Client user = UserService.getUserByEmail(email);
 
         if (user != null) {
             if (user.getPassword().equals(password)) {
                 System.out.println("Login successful.");
-                if (isUserAdmin(user)) {
-                    System.out.println("Welcome " + user.getName() + "!");
-                    return 1;
-                } else {
-                    System.out.println("Welcome " + user.getName() + "!");
-                    return 2;
-                }
+                return user;
 
             } else {
                 System.out.println("Invalid password.");
             }
         } else {
-            System.out.println("No user found with email \"" + email+"\".");
+            System.out.println("No user found with email \"" + email + "\".");
         }
-        return 0;
+        return null;
     }
 
     public static boolean isUserAdmin(Admin user) {
@@ -84,7 +78,8 @@ public class UserController {
         System.out.println("Admin added successfully.");
     }
 
-    public static void addClient() {
+    public static Client addClient() {
+        Client user = null;
         System.out.print("Enter the name of the user: ");
         String name = scanner.nextLine();
         System.out.print("Enter the email of the user: ");
@@ -95,9 +90,11 @@ public class UserController {
         String phone = scanner.nextLine();
         System.out.println("Enter the address of the user: ");
         String address = scanner.nextLine();
+        user = new Client(1, 0, name, email, password, phone, address, null, null);
+        ClientRepository.createClient(user);
 
-        ClientRepository.createClient(new Client(1, 0, name, email, password, phone, address, null, null));
         System.out.println("User added successfully.");
+        return user;
     }
 
     public static void viewUserDetails() {

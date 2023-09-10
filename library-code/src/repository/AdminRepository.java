@@ -145,28 +145,6 @@ public class AdminRepository {
         return admin;
     }
 
-    public static Admin getUserByEmail(String email){
-        Admin admin=null;
-        try {
-            String query = "SELECT * FROM users WHERE email = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                int is_admin = resultSet.getInt("is_admin");
-                String name = resultSet.getString("name");
-                String password = resultSet.getString("password");
-                String phone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
 
-                admin = new Admin(id, is_admin, name, email,password, phone, null, null);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return admin;
-    }
 
 }

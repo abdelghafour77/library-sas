@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +26,12 @@ public class BorrowRepository {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                int user_id = resultSet.getInt("user_id");
-                int book_id = resultSet.getInt("book_id");
-                String borrow_date = resultSet.getString("borrow_date");
-                String return_date = resultSet.getString("return_date");
+                String email = resultSet.getString("email");
+                String ISBN = resultSet.getString("ISBN");
                 String status = resultSet.getString("status");
                 String description = resultSet.getString("description");
 
-                borrows.add(new Borrow(id, user_id, book_id, borrow_date, return_date, status, description));
+                borrows.add(new Borrow(id, email, ISBN, status, description));
             }
 
             resultSet.close();
@@ -47,16 +46,14 @@ public class BorrowRepository {
 
     public static void createBorrow(Borrow borrow) {
         try {
-            String query = "INSERT INTO borrows (user_id, book_id, borrow_date, return_date, status, description) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO borrows (email, ISBN, status, description) VALUES (?, ?, ?, ?)";
 
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setInt(1, borrow.getUser_id());
-            statement.setInt(2, borrow.getBook_id());
-            statement.setString(3, borrow.getBorrow_date());
-            statement.setString(4, borrow.getReturn_date());
-            statement.setString(5, borrow.getStatus());
-            statement.setString(6, borrow.getDescription());
+            statement.setString(1, borrow.getEmail());
+            statement.setString(2, borrow.getISBN());
+            statement.setString(3, borrow.getStatus());
+            statement.setString(4, borrow.getDescription());
 
             statement.executeUpdate();
             statement.close();
@@ -68,6 +65,7 @@ public class BorrowRepository {
     }
 
     public static Borrow getBorrowById(int id) {
+
         Borrow borrow = null;
 
         try {
@@ -77,14 +75,12 @@ public class BorrowRepository {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int user_id = resultSet.getInt("user_id");
-                int book_id = resultSet.getInt("book_id");
-                String borrow_date = resultSet.getString("borrow_date");
-                String return_date = resultSet.getString("return_date");
+                String email = resultSet.getString("email");
+                String ISBN = resultSet.getString("ISBN");
                 String status = resultSet.getString("status");
                 String description = resultSet.getString("description");
 
-                borrow = new Borrow(id, user_id, book_id, borrow_date, return_date, status, description);
+                borrow = new Borrow(id, email, ISBN, status, description);
             }
 
             resultSet.close();
@@ -97,24 +93,22 @@ public class BorrowRepository {
         return borrow;
     }
 
-    public static List<Borrow> getBorrowByUserId(int user_id) {
+    public static List<Borrow> getBorrowByEmail(String email) {
         List<Borrow> borrows = new ArrayList<>();
 
         try {
-            String query = "SELECT * FROM borrows WHERE user_id=?";
+            String query = "SELECT * FROM borrows WHERE email=?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, user_id);
+            statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                int book_id = resultSet.getInt("book_id");
-                String borrow_date = resultSet.getString("borrow_date");
-                String return_date = resultSet.getString("return_date");
+                String ISBN = resultSet.getString("ISBN");
                 String status = resultSet.getString("status");
                 String description = resultSet.getString("description");
 
-                borrows.add(new Borrow(id, user_id, book_id, borrow_date, return_date, status, description));
+                borrows.add(new Borrow(id, email, ISBN, status, description));
             }
 
             resultSet.close();
@@ -127,24 +121,23 @@ public class BorrowRepository {
         return borrows;
     }
 
-    public static List<Borrow> getBorrowByBookId(int book_id) {
+    public static List<Borrow> getBorrowByISBN(String ISBN) {
         List<Borrow> borrows = new ArrayList<>();
 
         try {
-            String query = "SELECT * FROM borrows WHERE book_id=?";
+            String query = "SELECT * FROM borrows WHERE ISBN=?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, book_id);
+            statement.setString(1, ISBN);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                int user_id = resultSet.getInt("user_id");
-                String borrow_date = resultSet.getString("borrow_date");
-                String return_date = resultSet.getString("return_date");
+                String email = resultSet.getString("email");
                 String status = resultSet.getString("status");
                 String description = resultSet.getString("description");
 
-                borrows.add(new Borrow(id, user_id, book_id, borrow_date, return_date, status, description));
+
+                borrows.add(new Borrow(id, email, ISBN, status, description));
             }
 
             resultSet.close();
@@ -168,13 +161,11 @@ public class BorrowRepository {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                int user_id = resultSet.getInt("user_id");
-                int book_id = resultSet.getInt("book_id");
-                String borrow_date = resultSet.getString("borrow_date");
-                String return_date = resultSet.getString("return_date");
+                String email = resultSet.getString("email");
+                String ISBN = resultSet.getString("ISBN");
                 String description = resultSet.getString("description");
 
-                borrows.add(new Borrow(id, user_id, book_id, borrow_date, return_date, status, description));
+                borrows.add(new Borrow(id, email, ISBN, status, description));
             }
 
             resultSet.close();
@@ -189,17 +180,15 @@ public class BorrowRepository {
 
     public static Borrow updateBorrow(Borrow borrow) {
         try {
-            String query = "UPDATE borrows SET user_id=?, book_id=?, borrow_date=?, return_date=?, status=?, description=? WHERE id=?";
+            String query = "UPDATE borrows SET email=?, ISBN=?, status=?, description=? WHERE id=?";
 
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setInt(1, borrow.getUser_id());
-            statement.setInt(2, borrow.getBook_id());
-            statement.setString(3, borrow.getBorrow_date());
-            statement.setString(4, borrow.getReturn_date());
-            statement.setString(5, borrow.getStatus());
-            statement.setString(6, borrow.getDescription());
-            statement.setInt(7, borrow.getId());
+            statement.setString(1, borrow.getEmail());
+            statement.setString(2, borrow.getISBN());
+            statement.setString(3, borrow.getStatus());
+            statement.setString(4, borrow.getDescription());
+            statement.setInt(5, borrow.getId());
 
             statement.executeUpdate();
 
