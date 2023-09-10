@@ -2,6 +2,7 @@ import controller.AuthorController;
 import controller.BookController;
 import controller.BorrowController;
 import controller.UserController;
+import model.Admin;
 
 
 import java.util.Scanner;
@@ -10,6 +11,40 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        while (true) {
+            System.out.println("\nWelcome to Library Management System");
+            System.out.println("1. Login");
+            System.out.println("2. Register");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    int login = UserController.login();
+                    if (login == 1) {
+                        adminMenu(scanner);
+                    } else if (login == 2) {
+                        clientMenu(scanner);
+                    }
+                    break;
+                case 2:
+                    UserController.addClient();
+                    clientMenu(scanner);
+                    break;
+                case 3:
+                    System.out.println("Goodbye!");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void adminMenu(Scanner scanner) {
         while (true) {
             System.out.println("\nLibrary Management System");
             System.out.println("1. Books");
@@ -45,7 +80,35 @@ public class Main {
         }
     }
 
-    private static void bookMenu( Scanner scanner) {
+    private static void clientMenu(Scanner scanner) {
+        while (true) {
+            System.out.println("\nLibrary Management System");
+            System.out.println("1. Books");
+            System.out.println("2. Borrowed & Return Books");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    bookMenu(scanner);
+                    break;
+                case 2:
+                    borrowedMenu(scanner);
+                    break;
+                case 3:
+                    System.out.println("Goodbye!");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void bookMenu(Scanner scanner) {
         while (true) {
             System.out.println("\nBooks Menu");
             System.out.println("1. List All Books");
@@ -90,6 +153,7 @@ public class Main {
             }
         }
     }
+
     private static void userMenu(Scanner scanner) {
         while (true) {
             System.out.println("\nUsers Menu");
@@ -109,7 +173,7 @@ public class Main {
                     UserController.listAllUsers();
                     break;
                 case 2:
-                    while(true){
+                    while (true) {
                         System.out.println("\nAdd a User");
                         System.out.println("1. Add an Admin");
                         System.out.println("2. Add a Client");
@@ -117,7 +181,7 @@ public class Main {
                         System.out.print("Enter your choice: ");
                         int choice1 = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
-                        switch (choice1){
+                        switch (choice1) {
                             case 1:
                                 UserController.addAdmin();
                                 break;
@@ -222,7 +286,6 @@ public class Main {
             }
         }
     }
-
 
 
 }

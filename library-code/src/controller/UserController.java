@@ -1,11 +1,13 @@
 package controller;
 
+import com.sun.tools.javac.Main;
 import model.Admin;
 import model.Borrow;
 import model.Client;
 import repository.AdminRepository;
 import repository.BorrowRepository;
 import repository.ClientRepository;
+import service.UserService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +16,37 @@ public class UserController {
     private static final Scanner scanner = new Scanner(System.in);
     //create method to add user
 
+    public static int  login() {
+        System.out.print("Enter your email: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter your password: ");
+        String password = scanner.nextLine();
+
+        Admin user = UserService.getUserByEmail(email);
+
+        if (user != null) {
+            if (user.getPassword().equals(password)) {
+                System.out.println("Login successful.");
+                if (isUserAdmin(user)) {
+                    System.out.println("Welcome " + user.getName() + "!");
+                    return 1;
+                } else {
+                    System.out.println("Welcome " + user.getName() + "!");
+                    return 2;
+                }
+
+            } else {
+                System.out.println("Invalid password.");
+            }
+        } else {
+            System.out.println("No user found with email \"" + email+"\".");
+        }
+        return 0;
+    }
+
+    public static boolean isUserAdmin(Admin user) {
+        return user.getIs_admin().equals("admin");
+    }
 
     public static void listAllAdmins() {
         System.out.println("\nList All Admins :");
@@ -47,7 +80,7 @@ public class UserController {
         System.out.print("Enter the phone of the admin: ");
         String phone = scanner.nextLine();
 
-        AdminRepository.createAdmin(new Admin(1,1, name, email, password, phone, null, null));
+        AdminRepository.createAdmin(new Admin(1, 1, name, email, password, phone, null, null));
         System.out.println("Admin added successfully.");
     }
 
@@ -63,7 +96,7 @@ public class UserController {
         System.out.println("Enter the address of the user: ");
         String address = scanner.nextLine();
 
-        ClientRepository.createClient(new Client(1,0, name, email, password, phone, address, null, null));
+        ClientRepository.createClient(new Client(1, 0, name, email, password, phone, address, null, null));
         System.out.println("User added successfully.");
     }
 
@@ -100,7 +133,7 @@ public class UserController {
             String phone = scanner.nextLine();
             System.out.println("Enter the address of the user: ");
             String address = scanner.nextLine();
-            ClientRepository.updateClient(new Client(id,0, name, email, password, phone, address, null, null));
+            ClientRepository.updateClient(new Client(id, 0, name, email, password, phone, address, null, null));
             System.out.println("User updated successfully.");
         } else {
             System.out.println("No user found with id " + id);
