@@ -8,20 +8,20 @@ public class Borrow {
     String ISBN;
     String status;
     String description;
-    String created_at;
-    String updated_at;
+    LocalDate created_at;
 
-    public Borrow(int id, String email, String ISBN, String status, String description){
+
+    public Borrow(int id, String email, String ISBN, String status, String description, LocalDate created_at){
         this.id=id;
         this.email=email;
         this.ISBN=ISBN;
         this.status=status;
         this.description=description;
         this.created_at=created_at;
-        this.updated_at=updated_at;
+
     }
 
-    public Borrow(int id, String email, String ISBN, LocalDate borrow_date, LocalDate return_date, String status, String description) {
+    public Borrow(int id, String email, String ISBN, String status, String description) {
         this.id = id;
         this.email = email;
         this.ISBN = ISBN;
@@ -44,12 +44,10 @@ public class Borrow {
     public String getDescription(){
         return this.description;
     }
-    public String getCreated_at(){
+    public LocalDate getCreated_at(){
         return this.created_at;
     }
-    public String getUpdated_at(){
-        return this.updated_at;
-    }
+
 
     public void setId(int id) {
         this.id = id;
@@ -66,12 +64,10 @@ public class Borrow {
     public void setDescription(String description){
         this.description=description;
     }
-    public void setCreated_at(String created_at){
+    public void setCreated_at(LocalDate created_at){
         this.created_at=created_at;
     }
-    public void setUpdated_at(String updated_at){
-        this.updated_at=updated_at;
-    }
+
 
     @Override
     public String toString() {
@@ -82,7 +78,6 @@ public class Borrow {
                 ", status='" + status + '\'' +
                 ", description='" + description + '\'' +
                 ", created_at='" + created_at + '\'' +
-                ", updated_at='" + updated_at + '\'' +
                 '}';
     }
 

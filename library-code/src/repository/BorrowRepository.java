@@ -58,6 +58,20 @@ public class BorrowRepository {
             statement.executeUpdate();
             statement.close();
 
+            if(borrow.getStatus().equals("borrow")){
+            String query2 = "UPDATE books SET quantity = quantity - 1 WHERE ISBN = ?";
+            PreparedStatement statement2 = connection.prepareStatement(query2);
+            statement2.setString(1, borrow.getISBN());
+            statement2.executeUpdate();
+            statement2.close();
+            } else if (borrow.getStatus().equals("return")) {
+                String query2 = "UPDATE books SET quantity = quantity + 1 WHERE ISBN = ?";
+                PreparedStatement statement2 = connection.prepareStatement(query2);
+                statement2.setString(1, borrow.getISBN());
+                statement2.executeUpdate();
+                statement2.close();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -216,5 +230,25 @@ public class BorrowRepository {
             e.printStackTrace();
         }
     }
+    public static void refreshBorrows(){
+        try {
+            String query = "SELECT * FROM borrows WHERE status= 'borrow' and borrows.created_at <= DATE_SUB(NOW(), INTERVAL 30 DAY)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                query= "UPDATE borrows SET status = 'lost' WHERE id = ?";
+                PreparedStatement statement2 = connection.prepareStatement(query);
+                statement2.setInt(1, id);
+                statement2.executeUpdate();
+                statement2.close();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

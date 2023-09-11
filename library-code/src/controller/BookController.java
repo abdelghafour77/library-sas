@@ -1,7 +1,9 @@
 package controller;
 
 import model.Book;
+import model.Borrow;
 import repository.BookRepository;
+import repository.BorrowRepository;
 import service.AuthorService;
 import service.BookService;
 
@@ -136,6 +138,18 @@ public class BookController {
     }
 
     public static void statistics() {
+
+
+
+        int borrow= BorrowRepository.getBorrowByStatus("borrow").size();
+        int returnn= BorrowRepository.getBorrowByStatus("return").size();
+        int lost= BorrowRepository.getBorrowByStatus("lost").size();
+
+        System.out.println("the number of borrowed books is : "+borrow);
+        System.out.println("the number of returned books is : "+returnn);
+        System.out.println("the number of lost books is : "+lost);
+
+
     }
 
 

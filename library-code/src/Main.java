@@ -257,7 +257,7 @@ public class Main {
             System.out.println("\nBorrowed & Return Books Menu");
             System.out.println("1. List All Borrowed Books");
             System.out.println("2. List All Returned Books");
-            System.out.println("3. List All the losted Books");
+            System.out.println("3. List All lost Books");
             System.out.println("4. Borrow a Book");
             System.out.println("5. Return a Book");
             System.out.println("6. Back to Main Menu");
