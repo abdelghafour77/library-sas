@@ -98,4 +98,8 @@ public class BorrowController {
         }
     }
 
+    public static void refreshBorrows() {
+        BorrowRepository.refreshBorrows();
+    }
+
 }

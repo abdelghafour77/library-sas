@@ -2,7 +2,6 @@ import controller.AuthorController;
 import controller.BookController;
 import controller.BorrowController;
 import controller.UserController;
-import model.Admin;
 import model.Client;
 
 
@@ -49,12 +48,14 @@ public class Main {
 
     private static void adminMenu(Scanner scanner, Client user) {
         while (true) {
+            BorrowController.refreshBorrows();
             System.out.println("\nLibrary Management System");
             System.out.println("1. Books");
             System.out.println("2. Users");
             System.out.println("3. Borrowed & Return Books");
             System.out.println("4. Authors");
-            System.out.println("5. Exit");
+            System.out.println("5. Statistics");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -74,6 +75,9 @@ public class Main {
                     authorMenu(scanner);
                     break;
                 case 5:
+                    BookController.statistics();
+                    break;
+                case 6:
                     System.out.println("Goodbye!");
                     scanner.close();
                     System.exit(0);
@@ -113,6 +117,7 @@ public class Main {
 
     private static void bookMenu(Scanner scanner) {
         while (true) {
+            BorrowController.refreshBorrows();
             System.out.println("\nBooks Menu");
             System.out.println("1. List All Books");
             System.out.println("2. Add a Book");
@@ -120,8 +125,7 @@ public class Main {
             System.out.println("4. View Book Details");
             System.out.println("5. Update Book Details");
             System.out.println("6. Delete a Book");
-            System.out.println("7. Statistics");
-            System.out.println("8. Back to Main Menu");
+            System.out.println("7. Back to Main Menu");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -147,9 +151,6 @@ public class Main {
                     BookController.deleteBook();
                     break;
                 case 7:
-                    BookController.statistics();
-                    break;
-                case 8:
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -254,6 +255,7 @@ public class Main {
 
     private static void borrowedMenu(Scanner scanner) {
         while (true) {
+            BorrowController.refreshBorrows();
             System.out.println("\nBorrowed & Return Books Menu");
             System.out.println("1. List All Borrowed Books");
             System.out.println("2. List All Returned Books");

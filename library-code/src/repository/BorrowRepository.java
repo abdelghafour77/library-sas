@@ -59,13 +59,13 @@ public class BorrowRepository {
             statement.close();
 
             if(borrow.getStatus().equals("borrow")){
-            String query2 = "UPDATE books SET quantity = quantity - 1 WHERE ISBN = ?";
+            String query2 = "UPDATE books SET quantity = available_quantity - 1 WHERE ISBN = ?";
             PreparedStatement statement2 = connection.prepareStatement(query2);
             statement2.setString(1, borrow.getISBN());
             statement2.executeUpdate();
             statement2.close();
             } else if (borrow.getStatus().equals("return")) {
-                String query2 = "UPDATE books SET quantity = quantity + 1 WHERE ISBN = ?";
+                String query2 = "UPDATE books SET quantity = available_quantity + 1 WHERE ISBN = ?";
                 PreparedStatement statement2 = connection.prepareStatement(query2);
                 statement2.setString(1, borrow.getISBN());
                 statement2.executeUpdate();

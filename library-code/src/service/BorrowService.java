@@ -51,6 +51,10 @@ public class BorrowService {
         }
     }
 
+    public static void refreshBorrows() {
+        BorrowRepository.refreshBorrows();
+    }
+
 
 
 
