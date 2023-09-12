@@ -10,10 +10,35 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        mainMenu(scanner);
+        //adminMenu(scanner, null);
+        //clientMenu(scanner, null);
+        //bookMenu(scanner);
+        //userMenu(scanner);
+        //authorMenu(scanner);
+        //borrowedMenu(scanner);
+    }
 
+    public static void mainMenu(Scanner scanner){
         while (true) {
-            System.out.println("***********************************************************");
-            System.out.println("//\t\tWelcome to Library Management System.\t\t\\");
+            System.out.println(
+                    "\n" +
+                            " __    __     _                          \n" +
+                            "/ / /\\ \\ \\___| | ___ ___  _ __ ___   ___ \n" +
+                            "\\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\\n" +
+                            " \\  /\\  /  __/ | (_| (_) | | | | | |  __/\n" +
+                            "  \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|" +
+                            "                                         "
+            );
+            System.out.println("\t  To library management system");
+            //System.out.println("   *********************************************************   ");
+            //System.out.println("//\t\t\tWelcome to Library Management System.\t\t\t \\\\");
+            //System.out.println("   *********************************************************   ");
+
+            System.out.println("\n");
+            System.out.println("   ***************************************   ");
+            System.out.println("\t\t\t\t  Main Menu");
+            System.out.println("   ***************************************   ");
             System.out.println("1. Login");
             System.out.println("2. Register");
             System.out.println("3. Exit");
@@ -50,7 +75,11 @@ public class Main {
     private static void adminMenu(Scanner scanner, Client user) {
         while (true) {
             BorrowController.refreshBorrows();
-            System.out.println("\nLibrary Management System");
+            System.out.println("\n");
+            System.out.println("   ***************************************   ");
+            System.out.println("\t\t   Library Management System");
+            System.out.println("   ***************************************   ");
+
             System.out.println("1. Books");
             System.out.println("2. Users");
             System.out.println("3. Borrowed & Return Books");
@@ -90,7 +119,10 @@ public class Main {
 
     private static void clientMenu(Scanner scanner, Client user) {
         while (true) {
-            System.out.println("\nLibrary Management System");
+            System.out.println("\n");
+            System.out.println("   ***************************************   ");
+            System.out.println("\t\t   Library Management System");
+            System.out.println("   ***************************************   ");
             System.out.println("1. Books");
             System.out.println("2. My list of Borrowed & Return Books");
             System.out.println("3. Exit");
@@ -119,7 +151,11 @@ public class Main {
     private static void bookMenu(Scanner scanner) {
         while (true) {
             BorrowController.refreshBorrows();
-            System.out.println("\nBooks Menu");
+            System.out.println("\n");
+            System.out.println("   ***************************************   ");
+            System.out.println("\t\t\t\t  Books Menu");
+            System.out.println("   ***************************************   ");
+
             System.out.println("1. List All Books");
             System.out.println("2. Add a Book");
             System.out.println("3. Search for Book");
@@ -161,7 +197,9 @@ public class Main {
 
     private static void userMenu(Scanner scanner) {
         while (true) {
-            System.out.println("\nUsers Menu");
+            System.out.println("   ***************************************   ");
+            System.out.println("\t\t\t\t  Users Menu");
+            System.out.println("   ***************************************   ");
             System.out.println("1. List All Users");
             System.out.println("2. Add a User");
             System.out.println("3. View User Details");
@@ -218,7 +256,9 @@ public class Main {
 
     private static void authorMenu(Scanner scanner) {
         while (true) {
-            System.out.println("\nAuthors Menu");
+            System.out.println("   ***************************************   ");
+            System.out.println("\t\t\t\t Authors Menu");
+            System.out.println("   ***************************************   ");
             System.out.println("1. List All Authors");
             System.out.println("2. Add an Author");
             System.out.println("3. View Author Details");
@@ -257,7 +297,9 @@ public class Main {
     private static void borrowedMenu(Scanner scanner) {
         while (true) {
             BorrowController.refreshBorrows();
-            System.out.println("\nBorrowed & Return Books Menu");
+            System.out.println("   ***************************************   ");
+            System.out.println("\t\t Borrowed & Return Books Menu");
+            System.out.println("   ***************************************   ");
             System.out.println("1. List All Borrowed Books");
             System.out.println("2. List All Returned Books");
             System.out.println("3. List All lost Books");

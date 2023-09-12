@@ -2,6 +2,7 @@ package controller;
 
 import model.Borrow;
 import repository.BorrowRepository;
+import service.BorrowService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,8 +31,8 @@ public class BorrowController {
         String ISBN = scanner.nextLine();
         System.out.print("Enter the description of the borrow: ");
         String description = scanner.nextLine();
-        BorrowRepository.createBorrow(new Borrow(1, email, ISBN, "borrow", description));
-        System.out.println("Borrow added successfully.");
+        System.out.println(BorrowService.createBorrow(new Borrow(1, email, ISBN, "borrow", description)));
+
     }
 
     public static void addReturn() {
@@ -42,8 +43,7 @@ public class BorrowController {
 
         System.out.print("Enter the description of the return: ");
         String description = scanner.nextLine();
-        BorrowRepository.createBorrow(new Borrow(1, email, ISBN, "return", description));
-        System.out.println("Borrow added successfully.");
+        System.out.println(BorrowService.createBorrow(new Borrow(1, email, ISBN, "return", description)));
     }
 
     public static void viewBorrowDetails() {

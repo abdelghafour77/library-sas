@@ -44,11 +44,32 @@ public class BorrowRepository {
         return borrows;
     }
 
-    public static void createBorrow(Borrow borrow) {
+    public static String createBorrow(Borrow borrow) {
         try {
-            String query = "INSERT INTO borrows (email, ISBN, status, description) VALUES (?, ?, ?, ?)";
-
+            // check if the book exists
+            String query = "SELECT * FROM books WHERE ISBN = ?";
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, borrow.getISBN());
+            ResultSet resultSet = statement.executeQuery();
+
+            if (!resultSet.next()) {
+                return "Book with ISBN " + borrow.getISBN() + " not found.";
+            }
+
+            // check if the user exists
+            query = "SELECT * FROM users WHERE email = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, borrow.getEmail());
+            resultSet = statement.executeQuery();
+
+            if (!resultSet.next()) {
+                return "User with email " + borrow.getEmail() + " not found.";
+            }
+            statement.close();
+
+            String second_query = "INSERT INTO borrows (email, ISBN, status, description) VALUES (?, ?, ?, ?)";
+
+             statement = connection.prepareStatement(second_query);
 
             statement.setString(1, borrow.getEmail());
             statement.setString(2, borrow.getISBN());
@@ -58,12 +79,12 @@ public class BorrowRepository {
             statement.executeUpdate();
             statement.close();
 
-            if(borrow.getStatus().equals("borrow")){
-            String query2 = "UPDATE books SET available_quantity = available_quantity - 1 WHERE ISBN = ?";
-            PreparedStatement statement2 = connection.prepareStatement(query2);
-            statement2.setString(1, borrow.getISBN());
-            statement2.executeUpdate();
-            statement2.close();
+            if (borrow.getStatus().equals("borrow")) {
+                String query2 = "UPDATE books SET available_quantity = available_quantity - 1 WHERE ISBN = ?";
+                PreparedStatement statement2 = connection.prepareStatement(query2);
+                statement2.setString(1, borrow.getISBN());
+                statement2.executeUpdate();
+                statement2.close();
             } else if (borrow.getStatus().equals("return")) {
                 String query2 = "UPDATE books SET available_quantity = available_quantity + 1 WHERE ISBN = ?";
                 PreparedStatement statement2 = connection.prepareStatement(query2);
@@ -74,8 +95,9 @@ public class BorrowRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Borrow not added.";
         }
-
+        return "Borrow added successfully.";
     }
 
     public static Borrow getBorrowById(int id) {
@@ -215,7 +237,7 @@ public class BorrowRepository {
         return null;
     }
 
-    public static void deleteBorrow(int id) {
+    public static Boolean deleteBorrow(int id) {
         try {
             String query = "DELETE FROM borrows WHERE id=?";
 
@@ -226,11 +248,15 @@ public class BorrowRepository {
             statement.executeUpdate();
             statement.close();
 
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+
+            return false;
         }
     }
-    public static void refreshBorrows(){
+
+    public static void refreshBorrows() {
         try {
             String query = "SELECT * FROM borrows WHERE status= 'borrow' and borrows.created_at <= DATE_SUB(NOW(), INTERVAL 30 DAY)";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -238,7 +264,7 @@ public class BorrowRepository {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                query= "UPDATE borrows SET status = 'lost' WHERE id = ?";
+                query = "UPDATE borrows SET status = 'lost' WHERE id = ?";
                 PreparedStatement statement2 = connection.prepareStatement(query);
                 statement2.setInt(1, id);
                 statement2.executeUpdate();

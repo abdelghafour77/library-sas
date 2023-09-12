@@ -14,8 +14,18 @@ public class BookService {
         BookService.bookRepository = bookRepository;
     }
 
-    public static void createBook(Book book) {
-        bookRepository.createBook(book);
+    public static String createBook(Book book) {
+
+        // check if the book already exists
+        Book existingBook = BookRepository.getBookByIsbn(book.getIsbn());
+        if (existingBook != null) {
+            return "Book with ISBN " + book.getIsbn() + " already exists.";
+        }
+        if (BookRepository.createBook(book)) {
+            return "Book added successfully.";
+        } else {
+            return "Book not added.";
+        }
     }
 
     public static List<Book> getAllBooks() {
@@ -34,17 +44,33 @@ public class BookService {
         return BookRepository.searchBook(title);
     }
 
-    public static Book updateBook(Book book) {
-        return BookRepository.updateBook(book);
+    public static String updateBook(Book book) {
+        String message = "";
+        // check if the book exists
+        Book existingBook = BookRepository.getBookByIsbn(book.getIsbn());
+        if (existingBook != null) {
+            if (BookRepository.updateBook(book)) {
+                message = "Book updated successfully.";
+            } else {
+                message = "Book not updated.";
+            }
+        } else {
+            message = "Book not found.";
+        }
+        return message;
     }
 
-    public static void deleteBook(int id) {
-        // Check if the book exists
-        Book existingBook = BookRepository.getBookById(id);
+    public static String deleteBook(String ISBN) {
+        // check if the book exists
+        Book existingBook = BookRepository.getBookByIsbn(ISBN);
         if (existingBook != null) {
-            BookRepository.deleteBook(id);
+            if (BookRepository.deleteBook(ISBN)) {
+                return "Book deleted successfully.";
+            } else {
+                return "Book not deleted.";
+            }
         } else {
-            throw new IllegalArgumentException("Book with ID " + id + " not found.");
+            return "Book not found.";
         }
     }
 }

@@ -1,11 +1,8 @@
 package controller;
 
-import com.sun.tools.javac.Main;
 import model.Admin;
-import model.Borrow;
 import model.Client;
 import repository.AdminRepository;
-import repository.BorrowRepository;
 import repository.ClientRepository;
 import service.UserService;
 
@@ -91,7 +88,7 @@ public class UserController {
         System.out.println("Enter the address of the user: ");
         String address = scanner.nextLine();
         user = new Client(1, 0, name, email, password, phone, address, null, null);
-        ClientRepository.createClient(user);
+        UserService.createClient(user);
 
         System.out.println("User added successfully.");
         return user;
@@ -138,17 +135,16 @@ public class UserController {
     }
 
     public static void deleteUser() {
-        System.out.print("Enter the id of the user: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        System.out.print("Enter the Email of the user: ");
+        String email = scanner.nextLine();
 
-        Client user = ClientRepository.getUserById(id);
+        Client user = ClientRepository.getUserByEmail(email);
 
         if (user != null) {
-            ClientRepository.deleteClient(id);
+            ClientRepository.deleteClient(email);
             System.out.println("User deleted successfully.");
         } else {
-            System.out.println("No user found with id " + id);
+            System.out.println("No user found with email " + email);
         }
     }
 

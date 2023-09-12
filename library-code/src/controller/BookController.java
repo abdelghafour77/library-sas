@@ -24,7 +24,6 @@ public class BookController {
         for (Book book : books) {
             System.out.println(book.toString() + "\n");
         }
-
     }
 
     public static void addBook() {
@@ -40,8 +39,12 @@ public class BookController {
         System.out.print("Enter the quantity of the book: ");
         int quantity = Integer.parseInt(scanner.nextLine());
 
-        BookService.createBook(new Book(1, author_id, title, isbn, quantity, quantity, null));
-        System.out.println("Book added successfully.");
+        System.out.println(
+                BookService.createBook(
+                        new Book(1, author_id, title, isbn, quantity, quantity, null)
+                )
+        );
+
     }
 
     public static void viewBookDetails() {
@@ -96,7 +99,11 @@ public class BookController {
                         existingBook.setTitle(newTitle);
                         break;
                     case 2:
-                        // ghadi n3yt 3la function dyal get all authors
+                        AuthorController.listAllAuthors();
+                        System.out.println("Choose the author of the book by id: ");
+                        System.out.print("Enter the id_author of the book: ");
+                        int author_id = Integer.parseInt(scanner.nextLine());
+                        existingBook.setAuthor_id(author_id);
                         break;
                     case 3:
                         System.out.println("Enter the new quantity of the book: ");
@@ -115,39 +122,29 @@ public class BookController {
                     break;
                 }
             }
-            Book newBook = BookService.updateBook(existingBook);
-            System.out.println("Book details updated successfully.");
-            System.out.println(newBook.toString());
+            System.out.println(BookService.updateBook(existingBook));
+
         } else {
             System.out.println("Book not found.");
         }
     }
 
     public static void deleteBook() {
-        System.out.print("Enter the ID of the book to delete: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
-        Book existingBook = BookService.getBookById(id);
-        if (existingBook != null) {
-            BookService.deleteBook(id);
-            System.out.println("Book deleted successfully.");
-        } else {
-            System.out.println("Book not found.");
-        }
+        System.out.print("Enter the ISBN of the book to delete: ");
+        String ISBN = scanner.nextLine();
+        System.out.println(BookService.deleteBook(ISBN));
     }
 
     public static void statistics() {
 
 
+        int borrow = BorrowRepository.getBorrowByStatus("borrow").size();
+        int returnn = BorrowRepository.getBorrowByStatus("return").size();
+        int lost = BorrowRepository.getBorrowByStatus("lost").size();
 
-        int borrow= BorrowRepository.getBorrowByStatus("borrow").size();
-        int returnn= BorrowRepository.getBorrowByStatus("return").size();
-        int lost= BorrowRepository.getBorrowByStatus("lost").size();
-
-        System.out.println("the number of borrowed books is : "+borrow);
-        System.out.println("the number of returned books is : "+returnn);
-        System.out.println("the number of lost books is : "+lost);
+        System.out.println("the number of borrowed books is : " + borrow);
+        System.out.println("the number of returned books is : " + returnn);
+        System.out.println("the number of lost books is : " + lost);
 
 
     }

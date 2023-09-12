@@ -13,8 +13,8 @@ public class BorrowService {
         BorrowService.borrowRepository = borrowRepository;
     }
 
-    public static void createBorrow(Borrow borrow) {
-        BorrowRepository.createBorrow(borrow);
+    public static String createBorrow(Borrow borrow) {
+        return BorrowRepository.createBorrow(borrow);
     }
 
     public static List<Borrow> getAllBorrows() {
@@ -41,13 +41,16 @@ public class BorrowService {
         return BorrowRepository.updateBorrow(borrow);
     }
 
-    public static void deleteBorrow(int id) {
+    public static String deleteBorrow(int id) {
         // Check if the borrow exists
         Borrow existingBorrow = BorrowRepository.getBorrowById(id);
         if (existingBorrow != null) {
-            BorrowRepository.deleteBorrow(id);
+            if(BorrowRepository.deleteBorrow(id))
+                return "Borrow with ID " + id + " deleted successfully.";
+            else
+                return "Borrow with ID " + id + " not deleted.";
         } else {
-            throw new IllegalArgumentException("Borrow with ID " + id + " not found.");
+            return "Borrow with ID " + id + " not found.";
         }
     }
 

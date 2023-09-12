@@ -18,6 +18,11 @@ public class AuthorService {
     }
 
     public static void createAuthor(Author author) {
+        // check if the author already exists
+        Author existingAuthor = AuthorRepository.getAuthorByName(author.getName());
+        if (existingAuthor != null) {
+            throw new IllegalArgumentException("Author with name " + author.getName() + " already exists.");
+        }
         AuthorRepository.createAuthor(author);
     }
 
@@ -30,6 +35,12 @@ public class AuthorService {
     }
 
     public static Author updateAuthor(Author author) {
+        // Check if the author exists
+        Author existingAuthor = AuthorRepository.getAuthorById(author.getId());
+        if (existingAuthor == null) {
+            throw new IllegalArgumentException("Author with ID " + author.getId() + " not found.");
+        }
+
         return AuthorRepository.updateAuthor(author);
     }
 

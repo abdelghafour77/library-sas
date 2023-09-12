@@ -17,7 +17,7 @@ public class BookRepository {
         connection = Dbconnection.getConnection();
     }
 
-    public static void createBook(Book book) {
+    public static boolean createBook(Book book) {
         try {
             String query = "INSERT INTO books (title, author_id, isbn, quantity, available_quantity) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -32,7 +32,9 @@ public class BookRepository {
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public static List<Book> getAllBooks() {
@@ -149,7 +151,7 @@ public class BookRepository {
         return books;
     }
 
-    public static Book updateBook(Book book) {
+    public static boolean updateBook(Book book) {
         try {
             String query = "UPDATE books SET title = ?, author_id = ?, isbn = ?, quantity = ?, available_quantity = ? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -165,12 +167,24 @@ public class BookRepository {
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
 
-        return book;
+        return true;
     }
 
-    public static void deleteBook(int id) {
-        //books.removeIf(book -> book.getId() == id);
+    public static boolean deleteBook(String ISBN) {
+        try {
+            String query = "DELETE FROM books WHERE isbn = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, ISBN);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+
     }
 }
