@@ -78,13 +78,13 @@ public class ClientRepository {
         }
     }
 
-    public static void deleteClient(int id) {
+    public static void deleteClient(String email) {
         try {
-            String query = "DELETE FROM users WHERE id = ?";
+            String query = "DELETE FROM users WHERE email = ?";
 
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setInt(1, id);
+            statement.setString(1, email);
 
             statement.executeUpdate();
 

@@ -19,7 +19,7 @@ public class BookController {
         System.out.println("\nList All Books :");
 
         List<Book> books;
-        books = BookRepository.getAllBooks();
+        books = BookService.getAllBooks();
 
         for (Book book : books) {
             System.out.println(book.toString() + "\n");

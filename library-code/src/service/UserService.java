@@ -25,4 +25,17 @@ public class UserService {
     public static void createClient(Client client) {
         ClientRepository.createClient(client);
     }
+
+    public static void deleteClient(String email) {
+
+        // find the client by email
+        Client existingClient = ClientRepository.getUserByEmail(email);
+        if (existingClient != null) {
+            ClientRepository.deleteClient(email);
+        } else {
+            throw new IllegalArgumentException("Client with email " + email + " not found.");
+        }
+
+
+    }
 }
